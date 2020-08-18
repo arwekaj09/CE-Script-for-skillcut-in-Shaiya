@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Bypass Anticheat"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(skillcut,     128)
+alloc(cooldown,     128)
+alloc(jumping,      128)
+alloc(blackhole,    128)
+alloc(obstacles,    128)
+alloc(range,        128)
+label(blackhole_exit)
+
+skillcut:
+cmp [ecx+0000025C],ebx
+jne Game.exe+41D66
+jmp Game.exe+3DAEE
+
+cooldown:
+mov eax,[ebp+10]
+test eax,eax
+jmp Game.exe+DF080
+
+jumping:
+cmp edi,[008666D8]
+jmp Game.exe+161175
+
+blackhole:
+sub esp,0C
+push esi
+mov esi,[esp+14]
+cmp word ptr [esi+06],0155
+je blackhole_exit
+cmp word ptr [esi+06],015C
+je blackhole_exit
+cmp word ptr [esi+06],015D
+je blackhole_exit
+cmp word ptr [esi+06],015E
+je blackhole_exit
+cmp word ptr [esi+06],015F
+je blackhole_exit
+cmp word ptr [esi+06],0160
+je blackhole_exit
+push 04
+lea eax,[esp+10]
+jmp game.exe+18FD8E
+blackhole_exit:
+jmp game.exe+18FDCF
+
+obstacles:
+call game.exe+1A7450
+jmp game.exe+382C3
+
+range:
+call game.exe+C9110
+jmp game.exe+407C5
+
+Game.exe+3DADC:
+jmp skillcut
+
+Game.exe+DF043:
+jmp cooldown
+
+Game.exe+160EFC:
+jmp jumping
+
+Game.exe+18FD80:
+jmp blackhole
+
+Game.exe+382BA:
+jmp obstacles
+
+// Range Hack
+game.exe+3FCE6:
+db 90 90 90 90
+game.exe+1DFE5F2:
+db FF FF
+game.exe+407BC:
+
+[DISABLE]
+dealloc(skillcut)
+dealloc(cooldown)
+dealloc(jumping)
+dealloc(blackhole)
+dealloc(obstacles)
+
+Game.exe+3DADC:
+cmp [ecx+0000025C],ebx
+
+Game.exe+DF043:
+mov eax,[ebp+10]
+test eax,eax
+
+Game.exe+160EFC:
+cmp edi,[008666D8]
+
+Game.exe+18FD80:
+sub esp,0C
+push esi
+mov esi,[esp+14]
+
+Game.exe+382BA:
+call game.exe+1A7450
+
+// Range Hack
+game.exe+3FCE6:
+je game.exe+3FCFF
+movzx eax,word ptr [021FE5F2]
+game.exe+1DFE5F2:
+db 05 00
+game.exe+407BC:
+call game.exe+C9110
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
